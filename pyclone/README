@@ -6,8 +6,8 @@ P8_LiM	Metastasis_Live
 P8_LiP	Primary_Live
 
 step1：准备运行pyclone的tsv文件（需要snv结果和cnv结果，其中cnv结果为cnvkit结果命令为cnvkit.py call -v *.snv.vcf(varscan) -i TUMOR -n NORMAL）
-       cnvkit结果格式表头为：chromosome	start	end	gene	log2	baf	cn	cn1	cn2	depth	probes	weight（tab键分割）
-       ps：若snv结果为单call结果，则无需进行cnvkit.py call命令；
+cnvkit结果格式表头为：chromosome	start	end	gene	log2	baf	cn	cn1	cn2	depth	probes	weight（tab键分割）
+ps：若snv结果为单call结果，则无需进行cnvkit.py call命令；
        
 bash step1_prepare_pyclone.sh       
 
