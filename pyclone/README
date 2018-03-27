@@ -18,3 +18,5 @@ bash step2_run_pyclone.sh
 step3:根据pyclone结果，用clonevol软件画进化树；
 
 bash step3__for_clonevol.sh
+
+model.pdf为clonevol输出结果展现形式；
