@@ -1,0 +1,75 @@
+TITAN is a probabilistic framework for predicting regions of copy number alterations (LOH) and loss of heterozygosity (LOH) events in tumour whole genome sequencing (WGS) data. The model simultaneously estimates the cellular prevalence, proportion of tumour sample containing the event, and clonal cluster memberships;
+结果文件解释说明：
+*.segs.txt
+  1. Sample: Name of sample
+  2. Chromosome, Start_Position.bp., End_Position.bp.: Coordinates of segment
+  3. Length.snps.: Number of SNPs in the segment
+  4. Median_Ratio: Median allelic ratio across SNPs in the segment
+  5. Median_logR: Median log ratio across SNPs in the segment
+  6. TITAN_state: internal state number used by TITAN
+  7. TITAN_call: interpretable TITAN state; string fHOMD,DLOH,HET,NLOH,ALOH,ASCNA,BCNA,UBCNAg
+  8. Copy_Number: predicted TITAN copy number 
+  9. MinorCN: Copy number of minor allele
+  10. MajorCN: Copy number of major allele
+  11. Clonal_Cluster: predicted TITAN clonal cluster; lower cluster numbers represent clusters with higher cellular prevalence
+  12. Cellular_Frequency: proportion of tumour cells containing event; not to be mistaken as proportion of sample (including normal)
+
+*.titan.txt
+  1. Chr
+  2. Position
+  3. RefCount: number of reads matching the reference base
+  4. NRefCount: number of reads matching the non-reference base
+  5. Depth: total read depth at the position
+  6. AllelicRatio: RefCount/Depth
+  7. LogRatio: log2 ratio between normalized tumour and normal read depths
+  8. CopyNumber: predicted TITAN copy number
+  9. TITANstate: internal state number used by TITAN; see supplementary table 2 in manuscript
+  10. TITANcall: interpretable TITAN state; string fHOMD,DLOH,HET,NLOH,ALOH,ASCNA,BCNA,UBCNAg
+  11. ClonalCluster: predicted TITAN clonal cluster; lower cluster numbers represent clusters with higher cellular prevalence
+  12. CellularPrevalence: proportion of tumour cells containing event; not to be mistaken as proportion of sample (including normal)
+  13. Subclone1.CopyNumber: Copy number profile for Subclone 1
+  14. Subclone1.TITANcall: TITAN state for Subclone 1
+  15. Subclone1.Prevalence: Subclonal prevalence for Subclone 1
+  16. Subclone2.CopyNumber: Copy number profile for Subclone 2
+  17. Subclone2.TITANcall: TITAN state for Subclone 2
+  18. Subclone2.Prevalence: Subclonal prevalence for Subclone 2
+
+*.param.txt
+  1. Normal contamination estimate: proportion of normal content in the sample; tumour content is 1 minus this number
+  2. Average tumour ploidy estimate: average number of estimated copies in the genome; 2 represents diploid
+  3. Clonal cluster cellular prevalence: Z denotes the number of clonal clusters; each value (space-delimited) following are the cellular prevalence estimates for each cluster
+  4. Genotype binomial means for clonal cluster Z: set of 21 binomial estimated parameters for each specifled cluster
+  5. Genotype Gaussian means for clonal cluster Z: set of 21 Gaussian estimated means for each specified cluster
+  6. Genotype Gaussian variance: set of 21 Gaussian estimated variances; variances are shared for across all clusters
+  7. Number of iterations: number of EM iterations needed for convergence
+  8. Log likelihood: complete data log-likelihood for current cluster run
+  9. S Dbw dens.bw: density component of S Dbw index
+  10. S Dbw scat: scatter component of S Dbw index
+  11. S Dbw validity index: used for model selection; choose run with optimal number of clusters based on lowest S Dbw index
+  PS. Users may alter the S_Dbw.scale argument to penalize higher number of clonal clusters.
+
+HEMD:hemizygous deletion()
+HOMD:homizygous deletion(NA)
+NEUT:copy neutral
+NLOH:copy neutral LOH(AA、BB)
+DLOH:hemizygous deletion LOH(A、B)
+ALOH:amplified LOH(AAAA、BBBB等)
+BCNA:balanced copy number amplification(AABB)
+UBCNA:unbalanced copy number amplification(AABBB、AAABB)
+ASCNA:allele-specific gain/amplification(ABBB、AAAB、AAAAB、BBBBA)
+GAIN: gain/duplication of 1 allele(AAB、ABB)
+
+*_CNA.pdf
+  The Y-axis is based on log ratios. Log ratios are computed ratios between normalized tumour and normal read depths. Data points close to 0 represent diploid, above 0 are copy gains, below 0 are deletions. Bright Green - HOMD、Green - DLOH、Blue - HET,NLOH、Dark Red - GAIN、Red - ASCNA, UBCNA, BCNA.
+
+*_LOH.pdf
+  The Y-axis is based on allelic ratios. Allelic ratios are computed as RefCount/Depth. Data points close to 1 represent homozygous reference base, close to 0 represent homozygous non-reference base, and close to 0.5 represent heterozygous. Normal contamination influences the divergence away from 0.5 for LOH events.Grey - HET, BCNA、Bright Green - HOMD、Green - DLOH, ALOH、Blue - NLOH、Dark Red - GAIN、Red -ASCNA, UBCNA.
+
+*_CF.pdf
+  The Y-axis is the cellular prevalence that includes the normal proportion. Therefore, the cellular prevalence here refers to the proportion in the sample (including normal). Lines are drawn for each data point indicating the cellular prevalence. Heterozygous diploid are not shown because it is a normal genotype and is not categorized as being subclonal (this means 100% of cells are normal). The black horizontal line represents the tumour content labeled as "T". Each horizontal grey line represents the cellular prevalence of the clonal clusters labeled as Z1, Z2, etc. Colours are the sames for allelic ratio plots.
+
+*_subclone.pdf
+  Colours have the same definition as for the allelic ratio plots.
+
+*chr*.png
+  每条染色体的汇总图.
