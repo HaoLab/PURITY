@@ -1,5 +1,16 @@
-TITAN is a probabilistic framework for predicting regions of copy number alterations (LOH) and loss of heterozygosity (LOH) events in tumour whole genome sequencing (WGS) data. The model simultaneously estimates the cellular prevalence, proportion of tumour sample containing the event, and clonal cluster memberships;
-结果文件解释说明：
+###TitanCNA运行：
+
+step1：prepare
+
+准备一个list文件：格式为P38	Normal	P38	Tumor（tab键分割）
+
+step2：run
+
+bash TitanCNA.sh
+
+#TITAN is a probabilistic framework for predicting regions of copy number alterations (LOH) and loss of heterozygosity (LOH) events in tumour whole genome sequencing (WGS) data. The model simultaneously estimates the cellular prevalence, proportion of tumour sample containing the event, and clonal cluster memberships;
+#结果文件解释说明：
+
 *.segs.txt
   1. Sample: Name of sample
   2. Chromosome, Start_Position.bp., End_Position.bp.: Coordinates of segment
